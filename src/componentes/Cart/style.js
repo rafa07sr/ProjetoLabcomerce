@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
- export const DivCart = styled.section`
+export const DivCart = styled.section`
 display: flex;
 flex-wrap:wrap;
 gap:2vw;
@@ -29,5 +29,5 @@ button{
   box-shadow: 2px 3px 5px brown;
   color: white;
 }
-` 
+`
 

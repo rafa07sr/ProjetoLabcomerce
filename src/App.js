@@ -1,8 +1,8 @@
 import styled, { createGlobalStyle } from "styled-components";
 import React, { useState } from "react";
-import Cart from "./componentes/Cart/cart";
-import { DivCart } from "./componentes/Cart/style";
-import ProductList from "./componentes/productList/productList";
+import Cart from "./componentes/Cart/Cart";
+import { DivCart } from "./componentes/Cart/Style";
+import ProductList from "./componentes/productList/ProductList";
 import Filter from "./componentes/Filters/Filter";
 import Header from "./componentes/Header/Header";
 import { useEffect } from "react";
@@ -46,36 +46,41 @@ function App() {
   const [cart, setCart] = useState([])
   const [totalCart, setTotalCart] = useState(0)
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(1000);
-  const [mudarItem, setMudarItem] = useState("")
-  const [typeItem, setTypeItem]= useState("clothes")
+  const [maxPrice, setMaxPrice] = useState(1000)
+  const [TypeItem, setTypeItem] = useState("")
+  const [selectType, setSelectType] = useState(null)
+
+  const handleTypeClick = (item) => {
+    setSelectType(item)
+  }
+
 
 
   useEffect(() => {
-    const storedCart = localStorage.getItem('cart');
+    const storedCart = localStorage.getItem('cart')
     if (storedCart) {
-      setCart(JSON.parse(storedCart));
+      setCart(JSON.parse(storedCart))
     }
   }, [])
 
- 
+
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart))
   }, [cart])
 
   const handleTipoItemClick = (tipo) => {
-    setTypeItem(tipo);
+    setTypeItem(tipo)
   }
 
   const handleMinPriceChange = (event) => {
-    setMinPrice(event.target.value);
+    setMinPrice(event.target.value)
 
 
   }
 
   const handleMaxPriceChange = (event) => {
 
-    setMaxPrice(event.target.value);
+    setMaxPrice(event.target.value)
   }
 
   const onChangeBusca = (event) => {
@@ -88,30 +93,30 @@ function App() {
 
 
   const addCart = (item) => {
-    const index = cart.findIndex((cartItem) => cartItem.id === item.id);
+    const index = cart.findIndex((cartItem) => cartItem.id === item.id)
     if (index !== -1) {
       const updatedCart = [...cart];
-      updatedCart[index].quantity += 1;
+      updatedCart[index].quantity += 1
       setCart(updatedCart);
     } else {
-      setCart([...cart, { ...item, quantity: 1 }]);
+      setCart([...cart, { ...item, quantity: 1 }])
     }
-    setTotalCart(totalCart + item.price).toFixed(2);
+    setTotalCart(totalCart + item.price).toFixed(2)
   }
 
 
   const removeCart = (item) => {
-    const carNew = cart.findIndex((cartItem) => cartItem.id === item.id);
+    const carNew = cart.findIndex((cartItem) => cartItem.id === item.id)
     if (carNew !== -1) {
       if (cart[carNew].quantity > 1) {
-        const updatedCart = [...cart];
-        updatedCart[carNew].quantity -= 1;
+        const updatedCart = [...cart]
+        updatedCart[carNew].quantity -= 1
         setCart(updatedCart);
       } else {
-        const newCart = cart.filter((cartItem) => cartItem.id !== item.id);
-        setCart(newCart);
+        const newCart = cart.filter((cartItem) => cartItem.id !== item.id)
+        setCart(newCart)
       }
-      setTotalCart(totalCart - item.price).toFixed(2);
+      setTotalCart(totalCart - item.price).toFixed(2)
     }
   }
 
@@ -133,6 +138,7 @@ function App() {
           maxPrice={maxPrice}
           handleMinPriceChange={handleMinPriceChange}
           handleMaxPriceChange={handleMaxPriceChange}
+          handleTypeClick={handleTypeClick}
         />
         <ProductList
           minPrice={minPrice}
@@ -142,6 +148,8 @@ function App() {
           ordenar={ordenar}
           cart={setCart}
           addCart={addCart}
+          selectType={selectType}
+          handleTypeClick={handleTypeClick}
         />
 
 
@@ -170,4 +178,4 @@ function App() {
 
 }
 
-export default App;
+export default App
