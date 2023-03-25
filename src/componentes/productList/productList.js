@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { Section, DivCards } from "./style";
+import { Section, DivCards } from "./Style";
 
 
 
-const ProductList = ({ inputBusca, ordenar, addCart, minPrice, maxPrice }) => {
+const ProductList = ({ inputBusca, ordenar, addCart, minPrice, maxPrice, selectType, handleTypeClick }) => {
 
 
   const [list, setList] = useState([
@@ -163,28 +163,28 @@ const ProductList = ({ inputBusca, ordenar, addCart, minPrice, maxPrice }) => {
       image: "https://http2.mlstatic.com/D_NQ_NP_828112-MLB53882474568_022023-O.webp"
     },
     {
-      id: 22,
+      id: 23,
       name: " montarbus",
       type: "toy",
       price: 215.30,
       image: "https://http2.mlstatic.com/D_NQ_NP_825185-MLB46133857281_052021-O.webp"
     },
     {
-      id: 23,
+      id: 24,
       name: " retrocar",
       type: "toy",
       price: 125.40,
       image: "https://http2.mlstatic.com/D_NQ_NP_801707-MLB51232659502_082022-O.webp"
     },
     {
-      id: 24,
+      id: 25,
       name: " imoblile toy",
       type: "toy",
       price: 133.40,
       image: "https://http2.mlstatic.com/D_NQ_NP_611141-MLB54274126311_032023-O.webp"
     },
     {
-      id: 25,
+      id: 26,
       name: " estacao do espaco",
       type: "toy",
       price: 183.20,
@@ -193,23 +193,20 @@ const ProductList = ({ inputBusca, ordenar, addCart, minPrice, maxPrice }) => {
   ])
 
 
-  const filteredProducts = list.filter((product) => product.price >= minPrice && product.price <= maxPrice)
-
-
+  const selectedProducts = selectType ? list.filter((item) => item.type === selectType) : list;
 
   return (
     <Section>
       <DivCards>
-        {filteredProducts
+        {selectedProducts
           .filter((item) => {
-            return inputBusca
-              ? item.name.toLocaleLowerCase().includes(inputBusca)
-              : true;
+            return inputBusca ? item.name.toLowerCase().includes(inputBusca) : true;
           })
+          .filter((item) => item.price >= minPrice && item.price <= maxPrice)
           .sort((a, b) => {
-            if (ordenar === "Up") {
+            if (ordenar === 'Up') {
               return a.price - b.price;
-            } else if (ordenar === "Down") {
+            } else if (ordenar === 'Down') {
               return b.price - a.price;
             } else {
               return 0;
@@ -217,7 +214,7 @@ const ProductList = ({ inputBusca, ordenar, addCart, minPrice, maxPrice }) => {
           })
           .map((item) => (
             <div key={item.id}>
-              <img src={item.image}></img>
+              <img src={item.image} alt={item.name} />
               <p>{item.name}</p>
               <p>{item.price}</p>
               <button onClick={() => addCart(item)}>Add to Cart</button>
@@ -226,9 +223,8 @@ const ProductList = ({ inputBusca, ordenar, addCart, minPrice, maxPrice }) => {
       </DivCards>
     </Section>
   );
+};
+
+export default ProductList;
 
 
-}
-
-
-export default ProductList

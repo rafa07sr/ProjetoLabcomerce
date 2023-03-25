@@ -1,5 +1,5 @@
 import React from 'react'
-import {SectionHeader} from './Style'
+import { SectionHeader } from './Style'
 
 const Header = () => {
     return (

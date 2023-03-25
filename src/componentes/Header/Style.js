@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SectionHeader= styled.div`
+export const SectionHeader = styled.div`
     display: flex;
     gap: 14vw;
     margin-left: 5vw;
